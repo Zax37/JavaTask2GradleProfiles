@@ -12,3 +12,5 @@ Wywołania:
 - gradle build -Pprofile=prod &emsp;&emsp;: buduje projekt z profilem prod
 
 - gradle build -Pprofile=test &emsp; &emsp;: buduje projekt z profilem test
+
+W przypadku niepodania profilu ustawiany jest domyślny, zdefiniowany w build.gradle(dev).
