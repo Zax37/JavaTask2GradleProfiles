@@ -1,0 +1,8 @@
+ext {
+    replaceVars = [
+        "db.driverClass": "oracle.jdbc.OracleDriver",
+        "db.connectionURL": "www.development.com",
+        "db.username": "devUser",
+        "db.password": "devPassword",
+    ]
+}

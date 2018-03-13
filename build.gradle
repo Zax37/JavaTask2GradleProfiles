@@ -1,0 +1,52 @@
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+
+    id 'idea'
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+jar {
+    manifest {
+        attributes("Implementation-Title": project.name,
+            "Main-Class": "Library")
+    }
+}
+
+task initProfile {
+    def profiles = [dev: 'development', prod: 'production', test: 'testing']
+    def defaultProfile = "dev"
+
+    if (project.hasProperty('profile')) {
+        assert profiles.get(project.profile) != null
+        println "Profile: ${profiles.get(project.profile)}."
+        apply from: "gradle/${profiles.get(project.profile)}.gradle"
+    } else {
+        println "Profile not set. Defaulting to: ${profiles.get(defaultProfile)}."
+        apply from: "gradle/${profiles.get(defaultProfile)}.gradle"
+    }
+
+    def properties = file('src/main/resources/db.properties')
+    def propertiesOut = file('build/tmp/db.properties')
+
+    def newText = properties.getText().replaceAll(/\$\{(.*)\}/) {
+        all, some -> "${replaceVars.get(some)}"
+    }
+
+    propertiesOut.write(newText, 'UTF-8')
+}
+
+processResources {
+    with copySpec {
+        from 'build/tmp/db.properties'
+    }
+}
+
+tasks.build.dependsOn(tasks.initProfile)
+tasks.idea.dependsOn(tasks.initProfile)
