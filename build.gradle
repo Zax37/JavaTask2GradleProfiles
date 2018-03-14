@@ -1,21 +1,19 @@
 plugins {
-    // Apply the java-library plugin to add support for Java Library
     id 'java-library'
-
     id 'idea'
+    id 'application'
 }
 
-// In this section you declare where to find the dependencies of your project
+mainClassName = "pl.zax37.profiles.Library"
+
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
 
 jar {
     manifest {
         attributes("Implementation-Title": project.name,
-            "Main-Class": "Library")
+            "Main-Class": mainClassName)
     }
 }
 
@@ -38,7 +36,6 @@ task initProfile {
     def newText = properties.getText().replaceAll(/\$\{(.*)\}/) {
         all, some -> "${replaceVars.get(some)}"
     }
-
     propertiesOut.write(newText, 'UTF-8')
 }
 
@@ -49,4 +46,3 @@ processResources {
 }
 
 tasks.build.dependsOn(tasks.initProfile)
-tasks.idea.dependsOn(tasks.initProfile)
