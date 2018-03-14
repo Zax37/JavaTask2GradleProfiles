@@ -5,12 +5,14 @@
 Skrypt budujący build.gradle pozwala na przełączenie profili, a na podstawie wybranego profilu
 podmienia zawartość pliku db.properties na właściwe dla niego dane.
 
-Wywołania:
+Wywołanie:
 
-- gradle build -Pprofile=dev  &emsp; &emsp;: buduje projekt z profilem dev
+- gradle [run/build/jar] -Pprofile=[dev/prod/test] &emsp; uruchamia/buduje/pakuje do pliku jar projekt z wybranym profilem
 
-- gradle build -Pprofile=prod &emsp;&emsp;: buduje projekt z profilem prod
+Profile:
 
-- gradle build -Pprofile=test &emsp; &emsp;: buduje projekt z profilem test
+- dev - development - profil rozwojowy
+- prod - production - profil produkcyjny
+- test - testing - profil testerski
 
 W przypadku niepodania profilu ustawiany jest domyślny, zdefiniowany w build.gradle(dev).
